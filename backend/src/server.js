@@ -1,15 +1,16 @@
 import express from 'express';
-import dotenv from 'dotenv';
+import { ENV } from './lib/env.js';
 const app = express();
-// index.js
-console.log(`Hello ${process.env.HELLO}`)
 
 
-console.log('Database URL:', process.env.PORT);
-dotenv.config();
-app.get('/', (req, res) => {
-  res.status(200).json({ msg: 'Success from backend apinodemon 1212 ee' });
+
+console.log('Database URL:', ENV.PORT);
+console.log('Database URL:', ENV.DB_URL);
+
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ msg: 'api is up and running' });
 });
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(ENV.PORT, () => {
+  console.log(`Server is running on port ${ENV.PORT}`);
 });
