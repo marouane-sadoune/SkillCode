@@ -4,10 +4,13 @@ import { ENV } from './lib/env.js';
 import { connectDB } from './lib/db.js';
 const app = express();
 
+app.use(express.json());
+// credentials:true meaning?? => server allows a browser to include cookies on request
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+app.use(clerkMiddleware()); // this adds auth field to request object: req.auth()
 
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
-console.log('Database URL:', ENV.PORT);
-console.log('Database URL:', ENV.DB_URL);
 
 
 app.get('/health', (req, res) => {
@@ -28,5 +31,9 @@ if (ENV.NODE_ENV === 'production') {
 
 app.listen(ENV.PORT, () => {
   console.log(`Server is running on port ${ENV.PORT}`);
+<<<<<<< HEAD
   connectDB();
 });
+=======
+});
+>>>>>>> 5d4550395adacdee40365e0d7dce801fa7ba066e
